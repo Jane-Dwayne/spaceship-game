@@ -22,7 +22,7 @@ const firebaseConfig = {
     messagingSenderId: "303642679764",
     appId: "1:303642679764:web:9ea15e68cbd228618dde41",
     measurementId: "G-V4TG46RRYG"
-}
+};
 
 // Initialize Firebase with the config object
 const app = initializeApp(firebaseConfig);
@@ -32,28 +32,28 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // This variable will hold the unique identifier for the current user/session
-// let uid;
+let uid;
 
 // Signs in the user anonymously and logs errors if any
-// signInAnonymously(auth).catch((error) => {
- //  console.error(error.code);
-  // console.error(error.message);
-  // document.body.innerHTML = `
-   //  <div id="mainDiv">
-     //  <div class="jspsych-display-element">
-     //   <h1>Oops</h1>
-      //  Looks like there's a problem! Try hard refreshing your browser (Ctrl + F5).
-       // <br><br>
-       // Thank you!
-     // </div>
-   // </div>`;
-// });
+signInAnonymously(auth).catch((error) => {
+  console.error(error.code);
+  console.error(error.message);
+  document.body.innerHTML = `
+    <div id="mainDiv">
+      <div class="jspsych-display-element">
+        <h1>Oops</h1>
+        Looks like there's a problem! Try hard refreshing your browser (Ctrl + F5).
+        <br><br>
+        Thank you!
+      </div>
+    </div>`;
+});
 
 // Listening to the authentication state changes and assigning uid for authenticated users
-// onAuthStateChanged(auth, (user) => {
- // if (user) uid = user.uid;
-// });
+onAuthStateChanged(auth, (user) => {
+  if (user) uid = user.uid;
+});
 
 
 // Exporting uid, auth, and db so that they can be used in other files
-// export { uid, auth, db };
+export { uid, auth, db };
