@@ -62,7 +62,7 @@ LoginButton.addEventListener('click', (e) => {
             }).showToast();
 
             // Redirect the user to another page (e.g., game.html)
-            window.location.href = './game.html';
+            window.location.href = './index.html';
         })
         .catch((error) => {
             console.error('Error creating user entry:', error);
