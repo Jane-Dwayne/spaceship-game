@@ -57,7 +57,7 @@ const startGame = () => {
             });
 
             // Setting up initial data structure for the current game in Firestore
-            const docRef = doc(db, 'spaceship', game.studyID, 'subjects', uid);
+            const docRef = doc(db, 'onlinetesting', game.studyID, 'subjects', uid);
             setDoc(docRef, {
                 subjectID: game.subjectID,
                 date: new Date().toLocaleDateString(),
