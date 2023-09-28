@@ -29,7 +29,7 @@ const config = {
     attention_check_trials: [4, 40, 70],
 
     // URL to go to on completion (e.g., a link to Prolific)
-    completion_url: 'https://www.completion_url.com',
+    completion_url: 'https://uci.co1.qualtrics.com/jfe/form/SV_262um8BQ3DMXQ5U',
 };
 
 export default config;
