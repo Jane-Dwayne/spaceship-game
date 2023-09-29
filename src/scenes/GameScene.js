@@ -36,7 +36,7 @@ class GameScene extends Phaser.Scene {
         if (data) {
             if (data.score > this.topScore) {
                 this.topScore = data.score;
-            }           
+            }
         }
 
         // Set up cursor keys for player input
@@ -412,30 +412,25 @@ class GameScene extends Phaser.Scene {
 
     handleAttentionCheck() {
 
+        
         // More Detailed Attention Check Logic
-        if (this.cache.game.attention_check_trials.includes(this.cache.game.trial)) {
-            this.instructionText.setText(
-                "!! Attention check !!\nPlease press the " +
-                    this.cache.game.attention_check_key +
-                    " key"
-            );
-
-            this.attentionCheck = true;
-            if (this.attentionUpdate == null) {
-                this.attentionUpdate = this.time.addEvent({
-                    delay: 5000,
-                    callback: function () {
-                        if (this.attentionCheck == true) {
-                            this.instructionText.setText("");
-                            this.cache.game.attention_checks.push(false);
-                            this.attentionCheck = false;
-                            this.attentionUpdate = null;
-                        }
-                    },
-                    callbackScope: this,
-                    loop: false,
-                });
+        if (this.attentionCheck == true) {
+            if (this.attentionCheckKey.isDown) {
+                // Player pressed the "D" key correctly
+                this.instructionText.setText('');
+                this.cache.game.attention_checks.push(true);
+                this.attentionCheck = false;
+                this.attentionUpdate = null;
+                console.log('Attention check passed'); // Debugging statement
+            } else if (this.attentionUpdate && this.attentionUpdate.getProgress() === 1) {
+                // Attention check timer elapsed without "D" key press
+                this.instructionText.setText('');
+                this.cache.game.attention_checks.push(false);
+                this.attentionCheck = false;
+                this.attentionUpdate = null;
+                console.log('Attention check failed'); // Debugging statement
             }
+
         }
     }
 
@@ -464,8 +459,8 @@ class GameScene extends Phaser.Scene {
                             this.trialUpdate = null;
                             this.progress.setText(
                                 this.cache.game.player_trial +
-                                    " / " +
-                                    this.cache.game.n_trials
+                                " / " +
+                                this.cache.game.n_trials
                             );
                         }
                     },

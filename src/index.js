@@ -1,7 +1,7 @@
 // Importing necessary modules and components
 
 // Firebase modules and components - this may need to be changed if using a different database setup
-import { uid, auth, db } from './firebaseSetup.js';
+import { uid, db } from './firebaseSetup.js';
 import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js';
 
 // Task-specific modules and components
@@ -9,6 +9,7 @@ import config from './config.js';
 import gameConfig from './gameConfig.js';
 import { getQueryVariable } from './utils.js';
 
+console.log(uid)
 
 // Extract or generate subjectID, studyID, and testing variable based on the URL
 const subjectID = window.location.search.includes('SUBJECT_ID') ? getQueryVariable('SUBJECT_ID') : Math.floor(Math.random() * 2000001);
@@ -67,9 +68,15 @@ const startGame = () => {
             }).catch(error => {
                 console.error("Error writing to Firestore: ", error);
             });
+            const updateProgress = (uid, progress) => {
+                const userProgressRef = firebase.database().ref(`users/${userId}/progress`);
+                userProgressRef.set(progress);
+            };
             
             // Store database reference
+            
             game.db = db;
+            game.updateProgress=updateProgress;
             game.docRef = docRef;
 
             // Assigning other necessary properties to the game object
@@ -88,7 +95,7 @@ document.getElementById('start').innerHTML = `
     <br>
     <b>This task includes attention checks. <br>When a warning appears on screen you will need to press the D key on your keyboard</b>
     <p>Click below to start</p>
-    <button type="button" id="startButton" class="submit_button">Start Experiment</button>
+    <button type="button" id="startButton" disabled class="submit_button">Start Experiment</button>
     <br><br>`;
 
 // Adding click event listener to the start button to initialize the game when clicked
